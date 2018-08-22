@@ -1,11 +1,11 @@
 # Crossref_extension_for_matching
 
-This repository is created to match extracted references, which are not matched with the [main-approach](https://github.com/exciteproject/EXMATCHER) , using the Crossref API.
+This repository is created to match extracted references, which are not matched with the [main-approach](https://github.com/exciteproject/EXMATCHER), using the Crossref API.
 
 This procedure consists of four steps. Each step is implemented in a separate Python module.
 1. Join records from segments of references from multiple PSQL tables into one, call Crossref API and save results to PSQL. 
 2. Compare the similarity of Crossref results with the references from the first step. 
-3. Extract key fields (e.g. author, author+ title, title + journal) from a csv, which achieved a certain precision/recall/f-measure. 
+3. Extract key fields (e.g. author, author + title, title + journal) from a csv, which achieved a certain precision/recall/f-measure. 
 4. Compare results from (2.) with key fields from (3.). If the features of record from the second step match a list of key fields, save the record and the key fields it matched in a PSQL table.
 
 -----
@@ -47,7 +47,7 @@ crsim.calculate_similarity(psql_login_data, 50000)
 
 -----
 ### Third module: shrink_query_table.py
-This module reads a csv file containing recall and precision for a combination of queries, calculates f-measure and shrinks table by chosen measurement and threshold. Results are saved in a PSQL table. After shrinking, duplicate queries, e.g.  queries which are already part of a larger query, are removed.   
+This module reads a csv file containing recall and precision for a combination of queries, calculates f-measure and shrinks table by chosen measurement and threshold. Results are saved in a PSQL table. After shrinking, duplicate queries, e.g. queries which are already part of a larger query, are removed.   
 
 Snippet of csv:
 
@@ -86,7 +86,7 @@ stbl.shrink_table(csv_data, psql_login_data, 'p', 0.9)
 ```
 
 -----
-### Foruth module: compare_matches_with_queries.py
+### Fourth module: compare_matches_with_queries.py
 Compares the results of similarity between sowiport and crossref references, from the second module, with the retrieved queries of the third module. For each reference, the module checks if there is at least one query, where all fields of the reference are true for each field in the query. The comparison runs in chunks, whose size can be set as a parameter. Results are saved in a PSQL table containing *ref_id* of the reference and what query it matched.   
 
 
