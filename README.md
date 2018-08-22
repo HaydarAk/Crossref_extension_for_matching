@@ -1,13 +1,12 @@
 # Crossref_extension_for_matching
 
-This repository is created to compare and match sowiport references with
-results from Crossref API.
+This repository is created to match extracted references, which are not matched with the [main-approach](https://github.com/exciteproject/EXMATCHER) , using the Crossref API.
 
 This procedure consists of four steps. Each step is implemented in a separate Python module.
-1. Prepare Sowiport PSQL data, call Crossref API and save results to PSQL. 
-2. Compare similarity of Crossref results with the Sowiport input data. 
-3. Extract queries (e.g. author, author+ title, title + journal) from a csv, which achieved a certain precision/recall/f-measure.
-4. Compare results from (2.) with queries from (3.). If a record from the comparison of sowiport and crossref matches at least one query, save the ref_id of that record + the query it matched in a PSQL table.
+1. Join records from segments of references from multiple PSQL tables into one, call Crossref API and save results to PSQL. 
+2. Compare the similarity of Crossref results with the references from the first step. 
+3. Extract key fields (e.g. author, author+ title, title + journal) from a csv, which achieved a certain precision/recall/f-measure. 
+4. Compare results from (2.) with key fields from (3.). If the features of record from the second step match a list of key fields, save the record and the key fields it matched in a PSQL table.
 
 -----
 ### First module: crossref_api_not_match.py
